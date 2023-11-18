@@ -1,6 +1,5 @@
 // Import packages
 const express = require("express");
-const home = require("./routes/home");
 const path = require('path');
 
 
@@ -9,19 +8,29 @@ const app = express();
 app.use(express.json());
 
 // Routes
-app.use("/home", home);
 
 app.use('/', express.static('routes'));
-app.use('/', express.static('homes'));
-app.use('/', express.static('homes/index'));
+app.use('/', express.static('views'));
+app.use('/', express.static('views/index'));
 
-app.use('/homes', express.static(path.join(__dirname, '/routes/homes')));
+app.use('/views', express.static(path.join(__dirname, '/routes/views')));
 
-
-app.use('/', (req, res, next) => {
-    res.redirect('/homes');
-  });
+app.set('view engine', 'hbs');
   
+
+  app.get('/', (req, res) => {
+    res.redirect('views');
+  });
+
+
+
+
+
+
+
+
+
+
 
 // connection
 const port = process.env.PORT || 80;
